@@ -12,6 +12,6 @@ public class OrderCompletionTests
         order.AddLine(100m, 1);
         order.Complete();
 
-        Assert.That(order.Total, Is.EqualTo(100m));
+        Assert.That(order.IsFullyPaid(100m), Is.True);
     }
 }

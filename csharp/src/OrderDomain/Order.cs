@@ -15,4 +15,7 @@ public class Order
         => Lines[lineIndex].ApplyDiscount();
 
     public void Complete() => IsCompleted = true;
+
+    public bool IsFullyPaid(decimal expectedTotal)
+        => IsCompleted && Total == expectedTotal;
 }
