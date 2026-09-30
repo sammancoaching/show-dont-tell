@@ -5,6 +5,8 @@ namespace OrderTests;
 
 public class OrderTotalTests
 {
+    // This test was refactored — notice the custom matcher.
+    // The other tests still need the same treatment.
     [Test]
     public void DiscountOnFirstLine_TotalAndLineValues()
     {
@@ -14,9 +16,9 @@ public class OrderTotalTests
 
         order.ApplyDiscount(0);
 
-        Assert.That(order.Total, Is.EqualTo(210m));
-        Assert.That(order.Lines[0].Value, Is.EqualTo(160m));
-        Assert.That(order.Lines[1].Value, Is.EqualTo(50m));
+        Assert.That(order, Has.OrderState(
+            expectedTotal: 210m,
+             expectedLineValues: [160m, 50m]));
     }
 
     [Test]
