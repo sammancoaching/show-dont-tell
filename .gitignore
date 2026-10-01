@@ -16,3 +16,16 @@ TestResults/
 
 # dotnet CLI local data (when the CLI home points inside the repo)
 .local/
+
+## yak tracker
+.yaks
+
+## Java
+target/
+
+## Python
+__pycache__/
+*.py[oc]
+.venv/
+.pytest_cache/
+.ruff_cache/
