@@ -22,6 +22,7 @@ TestResults/
 
 ## Java
 target/
+.m2repo/
 
 ## Python
 __pycache__/
@@ -29,3 +30,5 @@ __pycache__/
 .venv/
 .pytest_cache/
 .ruff_cache/
+.uv-cache/
+.uv-managed-python/

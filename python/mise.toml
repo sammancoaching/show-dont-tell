@@ -1,3 +1,8 @@
 [tools]
 python = "3.13.16"
 uv = "0.12.21"
+
+[env]
+# Keep uv caches/installs inside the workspace (sandboxes often block ~/.local/share/uv)
+UV_CACHE_DIR = "./.uv-cache"
+UV_PYTHON_INSTALL_DIR = "./.uv-managed-python"
