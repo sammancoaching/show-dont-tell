@@ -32,3 +32,4 @@ __pycache__/
 .ruff_cache/
 .uv-cache/
 .uv-managed-python/
+.pi/
