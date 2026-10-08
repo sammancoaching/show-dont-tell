@@ -12,7 +12,9 @@ public class OrderCompletionTests
         order.AddLine(100m, 1);
         order.Complete();
 
+        Assert.That(order.IsCompleted, Is.True);
         Assert.That(order.Total, Is.EqualTo(100m));
+        Assert.That(order.Payments.Sum(), Is.EqualTo(0m));
     }
     
     [Test]
@@ -24,7 +26,8 @@ public class OrderCompletionTests
         Assert.Throws<InvalidOperationException>(() => order.Pay(100m));
 
         Assert.That(order.IsCompleted, Is.False);
-        Assert.That(order.AmountPaid, Is.EqualTo(0m));
+        Assert.That(order.Payments.Sum(), Is.EqualTo(0m));
+        Assert.That(order.Total - order.Payments.Sum(), Is.EqualTo(100m));
     }
 
     [Test]
@@ -36,9 +39,9 @@ public class OrderCompletionTests
 
         order.Pay(40m);
 
-        Assert.That(order.AmountPaid, Is.EqualTo(40m));
-        Assert.That(order.Outstanding, Is.EqualTo(60m));
-        Assert.That(order.IsFullyPaid, Is.False);
+        Assert.That(order.IsCompleted, Is.True);
+        Assert.That(order.Payments.Sum(), Is.EqualTo(40m));
+        Assert.That(order.Total - order.Payments.Sum(), Is.EqualTo(60m));
     }
 
     [Test]
@@ -51,9 +54,9 @@ public class OrderCompletionTests
         order.Pay(40m);
         order.Pay(60m);
 
+        Assert.That(order.IsCompleted, Is.True);
         Assert.That(order.Payments, Is.EqualTo(new[] { 40m, 60m }));
-        Assert.That(order.Outstanding, Is.EqualTo(0m));
-        Assert.That(order.IsFullyPaid, Is.True);
+        Assert.That(order.Total - order.Payments.Sum(), Is.EqualTo(0m));
     }
 
     [Test]
@@ -66,7 +69,8 @@ public class OrderCompletionTests
 
         Assert.Throws<InvalidOperationException>(() => order.Pay(10m));
 
-        Assert.That(order.AmountPaid, Is.EqualTo(100m));
-        Assert.That(order.IsFullyPaid, Is.True);
+        Assert.That(order.IsCompleted, Is.True);
+        Assert.That(order.Payments.Sum(), Is.EqualTo(100m));
+        Assert.That(order.Total - order.Payments.Sum(), Is.EqualTo(0m));
     }
 }
