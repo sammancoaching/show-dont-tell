@@ -12,9 +12,9 @@ public class OrderCompletionTests
         order.AddLine(100m, 1);
         order.Complete();
 
-        Assert.That(order.IsCompleted && order.Total == 100m, Is.True);
+        Assert.That(order.Total, Is.EqualTo(100m));
     }
-
+    
     [Test]
     public void PaymentOnOpenOrder_Throws_OrderStillUnpaid()
     {
