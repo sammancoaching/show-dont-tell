@@ -2,9 +2,12 @@ package orderdomain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Order {
+
+    private final List<BigDecimal> payments = new ArrayList<>();
 
     private final List<OrderLine> lines = new ArrayList<>();
 
@@ -26,6 +29,26 @@ public class Order {
         return completed;
     }
 
+    public List<BigDecimal> getPayments() {
+        return Collections.unmodifiableList(payments);
+    }
+
+    public BigDecimal getAmountPaid() {
+        BigDecimal amountPaid = BigDecimal.ZERO;
+        for (BigDecimal payment : payments) {
+            amountPaid = amountPaid.add(payment);
+        }
+        return amountPaid;
+    }
+
+    public BigDecimal getOutstanding() {
+        return getTotal().subtract(getAmountPaid());
+    }
+
+    public boolean isFullyPaid() {
+        return completed && getOutstanding().compareTo(BigDecimal.ZERO) == 0;
+    }
+
     public void addLine(BigDecimal unitPrice, int quantity) {
         lines.add(new OrderLine(unitPrice, quantity));
     }
@@ -38,9 +61,16 @@ public class Order {
         completed = true;
     }
 
-    // C# decimal == is numeric (scale-insensitive); BigDecimal.equals is
-    // scale-sensitive, so compare numerically with compareTo.
-    public boolean isFullyPaid(BigDecimal expectedTotal) {
-        return completed && getTotal().compareTo(expectedTotal) == 0;
+    public void pay(BigDecimal amount) {
+        if (!completed) {
+            throw new IllegalStateException("Cannot pay an open order.");
+        }
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Payment must be positive.");
+        }
+        if (amount.compareTo(getOutstanding()) > 0) {
+            throw new IllegalStateException("Payment exceeds outstanding amount.");
+        }
+        payments.add(amount);
     }
 }
