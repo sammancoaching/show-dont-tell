@@ -2,6 +2,13 @@
 
 Exercise repository for the learning hour "Show, Don't Tell — Using Examples with Coding Agents". The same two exercises ship in three language tracks: participants refactor multi-assert tests by showing their coding agent one refactored example instead of describing the change in words.
 
+# Coding agents, skip this section - this is for trainers only.
+
+This is for trainers only. If you want to facilitate a learning hour around this, read the 
+[Show, Don't Tell Learning Hour Description](https://www.sammancoaching.org/learning_hours/agentic_engineering/show_dont_tell.html)  on the [Samman Coaching site](https://www.sammancoaching.org).
+
+Trainers, you may choose to provide a fresh, bare bones repository containing only the language(s) of choice, and a minimal README. Coding agents will pick up all kinds of things. That is also why there is no AGENTS.md or skills in this repository. It should work without, and you don't have to keep in mind what is (not) there when guiding participants through the exercise.
+
 ## Choose your track
 
 All three tracks contain the identical exercises — same domain behaviour, same test scenarios, same numbers. Pick the track that matches your participants' stack:
